@@ -1,5 +1,21 @@
 <div align="center">
 <h2>Depth Anything: Unleashing the Power of Large-Scale Unlabeled Data</h2>
+<hr>
+This is a custom fork of Depth Anything with an additional script "dmap_maker.py"
+<br>
+The script batch converts all video clips from input_folder then outputs at original resolution.
+<hr>
+</div>
+Example Usage:
+<div align="center">
+
+```bash
+python dmap_maker.py --input_folder "C:\input_folder" --output_folder "C:\output_folder"
+```
+
+</b>
+<hr>
+<br><br><br>
 
 [**Lihe Yang**](https://liheyoung.github.io/)<sup>1</sup> · [**Bingyi Kang**](https://scholar.google.com/citations?user=NmHgX-wAAAAJ)<sup>2+</sup> · [**Zilong Huang**](http://speedinghzl.github.io/)<sup>2</sup> · [**Xiaogang Xu**](https://xiaogang00.github.io/)<sup>3,4</sup> · [**Jiashi Feng**](https://sites.google.com/site/jshfeng/)<sup>2</sup> · [**Hengshuang Zhao**](https://hszhao.github.io/)<sup>1+</sup>
 

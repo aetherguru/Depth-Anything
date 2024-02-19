@@ -3,7 +3,7 @@
 <hr>
 This is a custom fork of Depth Anything with an additional script "dmap_maker.py"
 <br>
-The script batch converts all video clips from input_folder into depth maps at original resolution.
+The script batch converts all video clips from input_folder into full resolution depth maps.
 <hr>
 </div>
 Example Usage:

@@ -12,6 +12,17 @@ Example Usage:
 ```bash
 python dmap_maker.py --input_folder "C:\input_folder" --output_folder "C:\output_folder"
 ```
+</div>
+Required Dependencies (nvidia):
+<div align="center">
+    
+```bash
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+```
+    
+```bash
+pip3 install -U xformers --index-url https://download.pytorch.org/whl/cu121
+```
 
 </b>
 <hr>

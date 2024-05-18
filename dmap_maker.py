@@ -30,8 +30,8 @@ def print_model_parameters(model):
 
 def get_transform():
     return Compose([
-        Resize(width=518, height=518, resize_target=False, keep_aspect_ratio=True, ensure_multiple_of=14,
-               resize_method='lower_bound', image_interpolation_method=cv2.INTER_CUBIC),
+        Resize(width=532, height=532, resize_target=False, keep_aspect_ratio=True, ensure_multiple_of=14,
+               resize_method='lower_bound', image_interpolation_method=cv2.INTER_LANCZOS4),
         NormalizeImage(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         PrepareForNet(),
     ])
@@ -71,15 +71,16 @@ def initialize_video_writer(cap, output_video_path):
     fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     fps = cap.get(cv2.CAP_PROP_FPS)
     width, height = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    return cv2.VideoWriter(output_video_path, fourcc, fps, (width, height))
+    return cv2.VideoWriter(output_video_path, fourcc, fps, (width, height), isColor=False)
 
 def process_frame(frame, model, transform, device, cap):
     image = transform_image(frame, transform, device)
     depth = estimate_depth(image, model)
-    depth_color = visualize_depth(depth)
+    depth_grayscale = visualize_depth(depth)
+    depth_grayscale_smoothed = apply_smoothing(depth_grayscale)
     # Resize depth map to match the frame's resolution
-    depth_color_resized = cv2.resize(depth_color, (frame.shape[1], frame.shape[0]), interpolation=cv2.INTER_AREA)
-    return depth_color_resized
+    depth_grayscale_resized = cv2.resize(depth_grayscale_smoothed, (frame.shape[1], frame.shape[0]), interpolation=cv2.INTER_LANCZOS4)
+    return depth_grayscale_resized
 
 def transform_image(frame, transform, device):
     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB) / 255.0
@@ -94,8 +95,13 @@ def estimate_depth(image, model):
 def visualize_depth(depth):
     depth_rescaled = depth.squeeze().cpu().numpy()
     depth_rescaled = (depth_rescaled - depth_rescaled.min()) / (depth_rescaled.max() - depth_rescaled.min()) * 255.0
-    depth_color = cv2.applyColorMap(depth_rescaled.astype(np.uint8), cv2.COLORMAP_INFERNO)
-    return depth_color
+    depth_grayscale = depth_rescaled.astype(np.uint8)
+    return depth_grayscale
+
+def apply_smoothing(depth_grayscale):
+    # Apply Gaussian blur to smooth the depth map
+    depth_smoothed = cv2.GaussianBlur(depth_grayscale, (5, 5), 0)
+    return depth_smoothed
 
 def main():
     args = parse_arguments()

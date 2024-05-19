@@ -44,11 +44,11 @@ def get_transform():
 
 
 def batch_process_videos(input_folder, output_folder, model, transform, device):
-    video_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.mp4', '.avi', '.mov'))]
+    video_files = [f for f in os.listdir(input_folder) if f.lower().endswith(('.mp4', '.avi', '.mov', '.mkv'))]
 
     for filename in tqdm(video_files, desc="Processing videos"):
         video_path = os.path.join(input_folder, filename)
-        output_video_path = os.path.join(output_folder, f"processed_{filename}")
+        output_video_path = os.path.join(output_folder, f"dmap_{filename}")
         process_video(video_path, output_video_path, model, transform, device)
 
 

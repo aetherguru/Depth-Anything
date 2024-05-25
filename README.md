@@ -10,7 +10,7 @@ Example Usage:
 <div align="center">
 
 ```bash
-python dmap_maker_gui.py"
+python dmap_maker_gui.py
 ```
 </div>
 Required Dependencies (nvidia):

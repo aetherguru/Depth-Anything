@@ -10,7 +10,7 @@ Example Usage:
 <div align="center">
 
 ```bash
-python dmap_maker.py --input_folder "D:\input_folder" --output_folder "D:\output_folder"
+python dmap_maker_gui.py"
 ```
 </div>
 Required Dependencies (nvidia):
